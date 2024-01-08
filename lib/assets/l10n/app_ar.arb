@@ -3,5 +3,6 @@
     "login": "",
     "register": "",
     "email": "",
-    "userName": ""
+    "userName": "",
+    "googleSign": ""
 }

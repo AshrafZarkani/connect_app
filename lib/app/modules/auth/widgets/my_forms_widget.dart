@@ -2,6 +2,7 @@ import 'package:connect_app/app/core/extensions/build_context_extinsion.dart';
 import 'package:connect_app/app/modules/auth/domain/helper/auth_validators.dart';
 import 'package:connect_app/app/modules/auth/widgets/my_textform_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyFormFields extends StatefulWidget {
   const MyFormFields({super.key, required this.formKey});
@@ -42,20 +43,24 @@ class _MyFormFieldsState extends State<MyFormFields> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            MyTextFormField(
-              textEditingController: emailController,
-              myFocusNode: emailNode,
-              myTextInputAction: TextInputAction.next,
-              labelText: context.translate.email,
-              prefexIcon: const Icon(Icons.email),
-              obsecureText: false,
-              onChanged: null,
-              validator: (value) {
-                return _authValidators.emailValidator(value);
-              },
-            ),
+            Consumer(builder: (context, ref, child) {
+              return MyTextFormField(
+                textEditingController: emailController,
+                myFocusNode: emailNode,
+                myTextInputAction: TextInputAction.next,
+                labelText: context.translate.email,
+                prefexIcon: const Icon(Icons.email),
+                obsecureText: false,
+                onChanged: (val) {
+                  print("email value $val");
+                },
+                validator: (value) {
+                  return _authValidators.emailValidator(value);
+                },
+              );
+            }),
             SizedBox(
-              height: context.screenHeight * 0.05,
+              height: context.screenHeight * 0.03,
             ),
             MyTextFormField(
               textEditingController: userNameController,
@@ -65,10 +70,12 @@ class _MyFormFieldsState extends State<MyFormFields> {
               prefexIcon: const Icon(Icons.person),
               labelText: context.translate.userName,
               myTextInputAction: TextInputAction.next,
-              onChanged: null,
+              onChanged: (value) {
+                //user name
+              },
             ),
             SizedBox(
-              height: context.screenHeight * 0.05,
+              height: context.screenHeight * 0.03,
             ),
             MyTextFormField(
               textEditingController: passwordController,
@@ -78,7 +85,7 @@ class _MyFormFieldsState extends State<MyFormFields> {
               prefexIcon: const Icon(Icons.password),
               labelText: context.translate.password,
               myTextInputAction: TextInputAction.next,
-              onChanged: null,
+              onChanged: (value) {},
               suffexIcon: const Icon(Icons.remove_red_eye_outlined),
             ),
             SizedBox(

@@ -15,6 +15,7 @@ class MyTheme {
       elevation: 0,
       iconTheme: IconThemeData(color: MyColors.primary_500),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(),
     buttonTheme: ButtonThemeData(
       textTheme: ButtonTextTheme.primary,
       buttonColor: MyColors.primary_500,

@@ -1,3 +1,4 @@
+import 'package:connect_app/app/core/extensions/build_context_extinsion.dart';
 import 'package:flutter/material.dart';
 
 class MyTextFormField extends StatelessWidget {
@@ -28,24 +29,28 @@ class MyTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: textEditingController,
-      focusNode: myFocusNode,
-      textInputAction: myTextInputAction,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+    return SizedBox(
+      height: context.screenHeight * 0.07,
+      child: TextFormField(
+        controller: textEditingController,
+        focusNode: myFocusNode,
+        textInputAction: myTextInputAction,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          contentPadding: EdgeInsets.all(20),
+          label: Text(labelText),
+          prefixIcon: prefexIcon,
+          suffix: IconButton(
+            icon: suffexIcon ?? const SizedBox(),
+            onPressed: togglePassword,
+          ),
         ),
-        label: Text(labelText),
-        prefixIcon: prefexIcon,
-        suffix: IconButton(
-          icon: suffexIcon ?? const SizedBox(),
-          onPressed: togglePassword,
-        ),
+        obscureText: obsecureText,
+        validator: validator,
+        onChanged: onChanged,
       ),
-      obscureText: obsecureText,
-      validator: validator,
-      onChanged: onChanged,
     );
   }
 }
