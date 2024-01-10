@@ -29,23 +29,26 @@ class AuthController extends StateNotifier<AuthState> {
     return false;
   }
 
-  Future googleSign() async {
+  Future<bool> googleSign() async {
     state = state.copyWith(isLoading: true);
     try {
       final user = await _authRepo.signInWithGoogle();
       if (user != null) {
         state = state.copyWith(isAuth: true);
+        return true;
       }
       state = state.copyWith(isLoading: false);
     } catch (e) {
       state = state.copyWith(isLoading: false);
       throw e.toString();
     }
+    return false;
   }
 
   Future<bool> signOut() async {
     try {
       await _authRepo.signOut();
+
       state = state.copyWith(
         isAuth: false,
         error: null,

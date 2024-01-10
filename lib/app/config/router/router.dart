@@ -2,6 +2,7 @@ import 'package:connect_app/app/config/router/my_named_routes.dart';
 import 'package:connect_app/app/modules/auth/views/login.dart';
 import 'package:connect_app/app/modules/auth/views/register.dart';
 import 'package:connect_app/app/modules/auth/views/splashscreen.dart';
+import 'package:connect_app/app/modules/chats/view/chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -43,6 +44,16 @@ abstract class AppRouter {
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: RegisterScreen(),
+        ),
+      ),
+
+      GoRoute(
+        parentNavigatorKey: rootNavigatorKey,
+        path: "/${MyNamedRoutes.chats}",
+        name: MyNamedRoutes.chats,
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: ChatsScreen(),
         ),
       ),
     ],
