@@ -5,5 +5,6 @@
     "userName": "User name",
     "password": "Password",
     "googleSign": "Google Sign",
-    "chats": "Chats"
+    "chats": "Chats",
+    "profile": "Profile"
 }

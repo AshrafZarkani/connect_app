@@ -3,11 +3,17 @@ import 'package:connect_app/app/modules/auth/views/login.dart';
 import 'package:connect_app/app/modules/auth/views/register.dart';
 import 'package:connect_app/app/modules/auth/views/splashscreen.dart';
 import 'package:connect_app/app/modules/chats/view/chats_screen.dart';
+import 'package:connect_app/app/modules/navbar/widgets/bottom_navbar_tabs.dart';
+import 'package:connect_app/app/modules/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../modules/navbar/view/bottom_navbar_scaffold.dart';
+
 ///[rootNavigatorKey] used for global | general navigation
 final rootNavigatorKey = GlobalKey<NavigatorState>();
+
+final shellRouteKey = GlobalKey<NavigatorState>();
 
 abstract class AppRouter {
   static Widget errorWidget(BuildContext context, GoRouterState state) =>
@@ -47,14 +53,35 @@ abstract class AppRouter {
         ),
       ),
 
-      GoRoute(
-        parentNavigatorKey: rootNavigatorKey,
-        path: "/${MyNamedRoutes.chats}",
-        name: MyNamedRoutes.chats,
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: ChatsScreen(),
-        ),
+      ShellRoute(
+        navigatorKey: shellRouteKey,
+        builder: (context, state, child) {
+          return ScaffoldWithBottomNavBar(
+            navtabs: BottomNavBarItem.navtabs(context),
+            child: child,
+          );
+        },
+        routes: [
+          /// home route
+          GoRoute(
+              path: "/${MyNamedRoutes.chats}",
+              name: MyNamedRoutes.chats,
+              pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: ChatsScreen(),
+                  ),
+              routes: []),
+
+          /// profile route
+          GoRoute(
+            path: "/${MyNamedRoutes.profile}",
+            name: MyNamedRoutes.profile,
+            pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              child: ProfileScreen(),
+            ),
+          ),
+        ],
       ),
     ],
     errorBuilder: errorWidget,
