@@ -1,5 +1,9 @@
 {
     
     "login": "",
-    "register": "" 
+    "register": "",
+    "email": "",
+    "userName": "",
+    "googleSign": "",
+    "chats": ""
 }

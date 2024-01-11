@@ -1,6 +1,8 @@
 import 'package:connect_app/app/config/router/my_named_routes.dart';
 import 'package:connect_app/app/modules/auth/views/login.dart';
+import 'package:connect_app/app/modules/auth/views/register.dart';
 import 'package:connect_app/app/modules/auth/views/splashscreen.dart';
+import 'package:connect_app/app/modules/chats/view/chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,13 +21,13 @@ abstract class AppRouter {
     routes: [
       // outside the [ShellRoute] to make the screen on top of the [BottomNavBar]
       GoRoute(
-          parentNavigatorKey: rootNavigatorKey,
-          path: MyNamedRoutes.root,
-          pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: const SplashScreen(),
-              ),
-          routes: []),
+        parentNavigatorKey: rootNavigatorKey,
+        path: MyNamedRoutes.root,
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: const SplashScreen(),
+        ),
+      ),
       GoRoute(
         parentNavigatorKey: rootNavigatorKey,
         path: "/${MyNamedRoutes.login}",
@@ -33,6 +35,25 @@ abstract class AppRouter {
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const LoginScreen(),
+        ),
+      ),
+      GoRoute(
+        parentNavigatorKey: rootNavigatorKey,
+        path: "/${MyNamedRoutes.register}",
+        name: MyNamedRoutes.register,
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: RegisterScreen(),
+        ),
+      ),
+
+      GoRoute(
+        parentNavigatorKey: rootNavigatorKey,
+        path: "/${MyNamedRoutes.chats}",
+        name: MyNamedRoutes.chats,
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: ChatsScreen(),
         ),
       ),
     ],
