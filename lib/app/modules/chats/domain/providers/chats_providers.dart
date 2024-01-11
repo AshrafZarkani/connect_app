@@ -7,6 +7,7 @@ final fetchUsersProvider = FutureProvider((ref) async {
   ///final chatRepo = ref.watch(chatRepoProvider);
 
   final repo = ChatsRepo();
+
   try {
     final userList = await repo.fetchUsers();
     return userList;
