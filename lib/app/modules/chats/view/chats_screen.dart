@@ -26,6 +26,10 @@ class ChatsScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Card(
                         child: ListTile(
+                          onTap: () {
+                            context.pushNamed(MyNamedRoutes.chatDetails,
+                                extra: data[index]);
+                          },
                           title: Text(data[index].username.toString()),
                           subtitle: Text(data[index].email),
                         ),

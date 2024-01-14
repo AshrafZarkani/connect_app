@@ -40,7 +40,8 @@ class ProfileScreen extends StatelessWidget {
                 color: MyColors.black,
               ),
             );
-          })
+          }),
+          Text(DateTime.now().toString()),
         ],
       )),
     );
