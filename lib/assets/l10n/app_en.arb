@@ -6,5 +6,8 @@
     "password": "Password",
     "googleSign": "Google Sign",
     "chats": "Chats",
-    "profile": "Profile"
+    "profile": "Profile",
+    "photoGallery": "Photo Gallery",
+    "cameraImage": "Camera Image",
+    "cancel": "Cancel"
 }

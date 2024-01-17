@@ -51,7 +51,6 @@ class MessagingRepo {
             .collection('chat_rooms')
             .doc(chatRoomId)
             .collection('message')
-            .limit(50)
             .orderBy('timeStamp', descending: true)
             .snapshots();
 

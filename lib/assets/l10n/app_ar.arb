@@ -6,5 +6,8 @@
     "userName": "",
     "googleSign": "",
     "chats": "",
-    "profile": ""
+    "profile": "",
+    "photoGallery": "",
+    "cameraImage": "",
+    "cancel": ""
 }

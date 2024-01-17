@@ -1,8 +1,13 @@
+import 'package:connect_app/app/config/theme/my_colors.dart';
 import 'package:connect_app/app/core/extensions/build_context_extinsion.dart';
 import 'package:connect_app/app/modules/chats/domain/models/user_model.dart';
+import 'package:connect_app/app/modules/one_to_one_chat/domian/helper/image_picker_bottom_sheet.dart';
 import 'package:connect_app/app/modules/one_to_one_chat/domian/models/message.dart';
+import 'package:connect_app/app/modules/one_to_one_chat/domian/providers/controller/messages_notifer.dart';
 import 'package:connect_app/app/modules/one_to_one_chat/domian/providers/messaging_providers.dart';
 import 'package:connect_app/app/modules/one_to_one_chat/domian/repo/messaging_repo.dart';
+import 'package:connect_app/app/modules/one_to_one_chat/widgets/reciever_message_bubble.dart';
+import 'package:connect_app/app/modules/one_to_one_chat/widgets/sender_message_bubble.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +20,8 @@ class ChatRoomPageBody extends ConsumerStatefulWidget {
   ConsumerState<ChatRoomPageBody> createState() => _ChatRoomPageBodyState();
 }
 
-class _ChatRoomPageBodyState extends ConsumerState<ChatRoomPageBody> {
+class _ChatRoomPageBodyState extends ConsumerState<ChatRoomPageBody>
+    with PickAnImageFromBottomSheet {
   final _sendMessageController = TextEditingController();
 
   @override
@@ -28,6 +34,8 @@ class _ChatRoomPageBodyState extends ConsumerState<ChatRoomPageBody> {
   Widget build(BuildContext context) {
     final messageRepo = ref.watch(massegingRepoProvider);
     final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+    final messageState = ref.watch(chatMessageProvider);
+    final messageController = ref.read(chatMessageProvider.notifier);
     return Column(
       children: [
         Expanded(
@@ -50,42 +58,29 @@ class _ChatRoomPageBodyState extends ConsumerState<ChatRoomPageBody> {
                   itemCount: messageList.length,
                   reverse: true,
                   itemBuilder: (context, index) {
-                    return Row(
-                      mainAxisAlignment:
-                          currentUserId == messageList[index].senderId
-                              ? MainAxisAlignment.end
-                              : MainAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: Container(
-                            color: currentUserId == messageList[index].senderId
-                                ? Colors.amber
-                                : Colors.blue,
-                            padding: EdgeInsets.all(8),
-                            margin: EdgeInsets.all(8),
-                            child: Column(
-                              children: [
-                                Text(
-                                  messageList[index].message.toString(),
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                Text(messageList[index].timeStamp.toString())
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
+                    return currentUserId == messageList[index].senderId
+                        ? SenderMessageBubble(
+                            messageToDisplay: messageList[index])
+                        : RecieverMssageBubble(message: messageList[index]);
                   });
             },
+          ),
+        ),
+        Visibility(
+          visible: messageState.isLoading == true,
+          child: Center(
+            child: CircularProgressIndicator(),
           ),
         ),
         Container(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
+              IconButton(
+                  onPressed: () {
+                    showCustomBottomSheet(context);
+                  },
+                  icon: Icon(Icons.image)),
               Expanded(
                 child: TextField(
                   controller: _sendMessageController,
@@ -96,7 +91,7 @@ class _ChatRoomPageBodyState extends ConsumerState<ChatRoomPageBody> {
               IconButton(
                 onPressed: () async {
                   try {
-                    await messageRepo
+                    await messageController
                         .sendMessage(
                       senderId: currentUserId,
                       recieverId: widget.userModel.id,
@@ -117,7 +112,7 @@ class _ChatRoomPageBodyState extends ConsumerState<ChatRoomPageBody> {
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
