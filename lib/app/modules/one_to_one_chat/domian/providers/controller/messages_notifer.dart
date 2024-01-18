@@ -39,14 +39,70 @@ class ChatMessageStateNotifer extends StateNotifier<MessageChatState> {
     final destination = "file/$fileName";
 
     try {
+      state = state.copyWith(isLoading: true);
       final reference = FirebaseStorage.instance.ref(destination);
       reference.putFile(file).then((recievedFile) async {
         final downloadedUrl = await recievedFile.ref.getDownloadURL();
+        //state = state.copyWith(isLoading: false);
+        /// http file
         await sendMessage(
             senderId: senderId, recieverId: recieverId, message: downloadedUrl);
       });
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
     }
+  }
+
+  Future getImageFromGallery({
+    required String senderId,
+    required String recieverId,
+  }) async {
+    try {
+      state = state.copyWith(isLoading: true);
+      XFile? pickedFile = await picker.pickMedia();
+
+      if (pickedFile != null) {
+        upLoadFile(
+            file: File(pickedFile.path),
+            senderId: senderId,
+            recieverId: recieverId);
+      }
+      state = state.copyWith(isLoading: false);
+    } catch (e) {
+      state = state.copyWith(
+        error: e.toString(),
+        isLoading: false,
+      );
+    }
+  }
+
+  Future getImageFromCamera({
+    // named arguments
+    required String senderId,
+    required String recieverId,
+  }) async {
+    try {
+      state = state.copyWith(isLoading: true);
+      XFile? pickedFile = await picker.pickImage(
+        source: ImageSource.camera,
+        maxHeight: 480,
+        maxWidth: 640,
+        imageQuality: 50,
+      );
+
+      if (pickedFile != null) {
+        upLoadFile(
+            file: File(pickedFile.path),
+            senderId: senderId,
+            recieverId: recieverId);
+      }
+      state = state.copyWith(isLoading: false);
+    } catch (e) {
+      state = state.copyWith(error: e.toString(), isLoading: false);
+    }
+  }
+
+  cancel() {
+    state = state.copyWith(message: "", isLoading: false);
   }
 }

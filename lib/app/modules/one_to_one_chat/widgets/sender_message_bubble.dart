@@ -28,7 +28,14 @@ class SenderMessageBubble extends StatelessWidget {
             child: Column(
               children: [
                 messageToDisplay.message.startsWith("https")
-                    ? Image.network(messageToDisplay.message)
+                    ? GestureDetector(
+                        onTap: () {},
+                        child: Image.network(
+                          messageToDisplay.message,
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          width: context.screenWidth * 0.4,
+                        ),
+                      )
                     : Text(
                         messageToDisplay.message.toString(),
                         style: context.textTheme.bodyMedium

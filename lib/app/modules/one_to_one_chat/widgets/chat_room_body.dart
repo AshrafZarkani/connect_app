@@ -78,7 +78,9 @@ class _ChatRoomPageBodyState extends ConsumerState<ChatRoomPageBody>
             children: [
               IconButton(
                   onPressed: () {
-                    showCustomBottomSheet(context);
+                    showCustomBottomSheet(context,
+                        senderId: currentUserId,
+                        recieverId: widget.userModel.id);
                   },
                   icon: Icon(Icons.image)),
               Expanded(
