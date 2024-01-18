@@ -1,14 +1,27 @@
 import 'package:connect_app/app/config/router/my_named_routes.dart';
 import 'package:connect_app/app/config/theme/my_colors.dart';
 import 'package:connect_app/app/core/extensions/build_context_extinsion.dart';
+import 'package:connect_app/app/core/services/notification_service.dart';
 import 'package:connect_app/app/modules/auth/domain/providers/auth_providers.dart';
 import 'package:connect_app/app/modules/chats/domain/providers/chats_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ChatsScreen extends StatelessWidget {
+class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
+
+  @override
+  State<ChatsScreen> createState() => _ChatsScreenState();
+}
+
+class _ChatsScreenState extends State<ChatsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    notificationSetup.registerNotification();
+    notificationSetup.configureLocalNotification();
+  }
 
   @override
   Widget build(BuildContext context) {
