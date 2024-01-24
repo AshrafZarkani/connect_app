@@ -1,6 +1,7 @@
 import 'package:connect_app/app/config/router/my_named_routes.dart';
 import 'package:connect_app/app/config/theme/my_colors.dart';
 import 'package:connect_app/app/core/extensions/build_context_extinsion.dart';
+import 'package:connect_app/app/modules/navbar/widgets/bottom_navbar_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,8 +22,10 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
     final String location = GoRouterState.of(context).matchedLocation;
     if (location.startsWith('/${MyNamedRoutes.chats}')) {
       return 0;
-    } else if (location.startsWith('/${MyNamedRoutes.profile}')) {
+    } else if (location.startsWith('/${MyNamedRoutes.location}')) {
       return 1;
+    } else if (location.startsWith('/${MyNamedRoutes.profile}')) {
+      return 2;
     }
     return 0;
   }
@@ -33,6 +36,9 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
         GoRouter.of(context).go('/${MyNamedRoutes.chats}');
         break;
       case 1:
+        GoRouter.of(context).go('/${MyNamedRoutes.location}');
+        break;
+      case 2:
         GoRouter.of(context).go('/${MyNamedRoutes.profile}');
         break;
     }
@@ -43,20 +49,7 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
     return Scaffold(
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.message_outlined),
-            label: context.translate.chats,
-            activeIcon: const Icon(
-              Icons.message_outlined,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: context.translate.profile,
-            activeIcon: Icon(Icons.person),
-          )
-        ],
+        items: BottomNavBarItem.navtabs(context),
         backgroundColor: MyColors.secondary_500,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: MyColors.primary_500,

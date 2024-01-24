@@ -12,10 +12,15 @@ abstract class BottomNavBarItem {
         ),
       ),
       BottomNavigationBarItem(
+        icon: Icon(Icons.location_on),
+        label: context.translate.location,
+        activeIcon: Icon(Icons.location_on),
+      ),
+      BottomNavigationBarItem(
         icon: Icon(Icons.person),
         label: context.translate.profile,
         activeIcon: Icon(Icons.person),
-      )
+      ),
     ];
   }
 }

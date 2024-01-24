@@ -68,7 +68,6 @@ class AuthRepo {
         "email": email,
         "id": uid,
         "photo": photoUrl,
-        "userLocation": null
       });
     } catch (e) {
       throw e.toString();

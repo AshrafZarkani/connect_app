@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // final chatRepoProvider = Provider((ref) => ChatsRepo());
 
-final fetchUsersProvider = FutureProvider((ref) async {
+final fetchUsersProvider = FutureProvider.autoDispose((ref) async {
   ///final chatRepo = ref.watch(chatRepoProvider);
 
   final repo = ChatsRepo();

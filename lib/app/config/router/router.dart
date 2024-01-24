@@ -4,6 +4,7 @@ import 'package:connect_app/app/modules/auth/views/register.dart';
 import 'package:connect_app/app/modules/auth/views/splashscreen.dart';
 import 'package:connect_app/app/modules/chats/domain/models/user_model.dart';
 import 'package:connect_app/app/modules/chats/view/chats_screen.dart';
+import 'package:connect_app/app/modules/location/view/location_screen.dart';
 import 'package:connect_app/app/modules/navbar/widgets/bottom_navbar_tabs.dart';
 import 'package:connect_app/app/modules/one_to_one_chat/views/chat_toom_page.dart';
 import 'package:connect_app/app/modules/profile/profile_screen.dart';
@@ -84,6 +85,16 @@ abstract class AppRouter {
                 ),
               ),
             ],
+          ),
+
+          /// location route
+          GoRoute(
+            path: "/${MyNamedRoutes.location}",
+            name: MyNamedRoutes.location,
+            pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              child: LocationScreen(),
+            ),
           ),
 
           /// profile route

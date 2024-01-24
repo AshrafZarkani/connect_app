@@ -13,13 +13,15 @@ class UserModel {
   final String email;
   final String id;
   final String photo;
-  final String userLocation;
+  final double? latitude;
+  final double? longitude;
   UserModel({
     required this.username,
     required this.email,
     required this.id,
     required this.photo,
-    required this.userLocation,
+    this.latitude,
+    this.longitude,
   });
 
   UserModel copyWith({
@@ -27,14 +29,16 @@ class UserModel {
     String? email,
     String? id,
     String? photo,
-    String? userLocation,
+    double? latitude,
+    double? longitude,
   }) {
     return UserModel(
       username: username ?? this.username,
       email: email ?? this.email,
       id: id ?? this.id,
       photo: photo ?? this.photo,
-      userLocation: userLocation ?? this.userLocation,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 
@@ -44,18 +48,20 @@ class UserModel {
       'email': email,
       'id': id,
       'photo': photo,
-      'userLocation': userLocation,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     try {
       return UserModel(
-        username: map['username'] as String,
-        email: map['email'] as String,
-        id: map['id'] as String,
+        username: map['username'] ?? "",
+        email: map['email'] ?? "",
+        id: map['id'] ?? "",
         photo: map['photo'] ?? "",
-        userLocation: map['userLocation'] ?? "",
+        latitude: map['latitude'] ?? 0.0,
+        longitude: map['longitude'] ?? 0.0,
       );
     } catch (e) {
       throw e.toString();
@@ -69,7 +75,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(username: $username, email: $email, id: $id, photo: $photo, userLocation: $userLocation)';
+    return 'UserModel(username: $username, email: $email, id: $id, photo: $photo, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
@@ -80,7 +86,8 @@ class UserModel {
         other.email == email &&
         other.id == id &&
         other.photo == photo &&
-        other.userLocation == userLocation;
+        other.latitude == latitude &&
+        other.longitude == longitude;
   }
 
   @override
@@ -89,6 +96,7 @@ class UserModel {
         email.hashCode ^
         id.hashCode ^
         photo.hashCode ^
-        userLocation.hashCode;
+        latitude.hashCode ^
+        longitude.hashCode;
   }
 }

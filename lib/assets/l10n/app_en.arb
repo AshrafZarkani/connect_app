@@ -9,5 +9,6 @@
     "profile": "Profile",
     "photoGallery": "Photo Gallery",
     "cameraImage": "Camera Image",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "location": "Location"
 }
